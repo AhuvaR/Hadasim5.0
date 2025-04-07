@@ -1,0 +1,70 @@
+# Node dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+out-tsc/
+tmp/
+bazel-out/
+
+# VSCode internal
+.vscode/
+.history/
+.vs/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Test coverage
+coverage/
+
+# OS / IDE / Editor junk
+.DS_Store
+Thumbs.db
+.idea/
+.project
+.classpath
+*.launch
+.settings/
+.c9/
+
+# Angular specific
+.angular/cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional: lockfiles (if you want to ignore them in monorepo)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Optional: local debug & test logs
+libpeerconnection.log
+testem.log
+connect.lock
+
+# Misc
+.sass-cache/
+pids
+*.log
+*.tgz
+
+# Optional: build tools cache
+.cache/

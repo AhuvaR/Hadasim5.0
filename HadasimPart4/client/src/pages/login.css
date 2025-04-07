@@ -1,0 +1,107 @@
+.newSipplier{
+    cursor: pointer;
+    font-style: italic;
+    text-decoration: underline;
+}
+.sighnUp-box{
+    width: 800px;
+    padding: 20px;
+    background: #f0f0f0;
+    margin: 50px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+.login-box {
+    width: 300px;
+    padding: 20px;
+    background: #f0f0f0;
+    margin: 50px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+.product-box{
+    width: 33%;
+    padding: 10px;
+    margin-bottom: 15px;
+    margin-right: 2px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.user-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.errorLabel {
+    display: block;
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.inputButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.inputButton:hover {
+    background-color: #45a049;
+}
+.user-box :focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.product-box:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.backButton{
+    margin-left: 85%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+.deleteButton{
+
+    /* margin-left: 85%; */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 4px;
+}
