@@ -1,6 +1,7 @@
 use [Hadsim_H.W.]
 
 /*
+Introduction to the exercise
 
 create table  personDetails (
 person_id int not null,
@@ -70,26 +71,40 @@ INSERT INTO personDetails (person_id, personal_name, family_name, gender, father
 (31, 'David', 'Ohayon', 'male', NULL, NULL, 32),
 (32, 'Michal', 'Ohayon', 'female', NULL, NULL, NULL),
 
-(33, 'Avraham', 'Cohen', 'male', 1, 2, NULL), -- ΰη ηγω
-(34, 'Leah', 'Cohen', 'female', 1, 2, NULL), -- ΰηεϊ ηγωδ
+(33, 'Avraham', 'Cohen', 'male', 1, 2, NULL), 
+(34, 'Leah', 'Cohen', 'female', 1, 2, NULL), 
 
 
-(35, 'Esther', 'Levi', 'female', 3, 4, NULL); -- ΰηεϊ ηγωδ
+(35, 'Esther', 'Levi', 'female', 3, 4, NULL);
 */
 
 
+--I was referring to the fact that in the first table, the father's, mother's, and spouse's id necessarily exist in the personDetails table as a record (person_id) 
+--(as long as they are not null).
+--Therefore, when I created the table in Exercise 1, a symmetric relationship was automatically created.
+--For example, in a father-child relationship, two records were automatically created:
+--Father & Child
+--Similarly, for a spouse relationship: two records were created:
+--Husband $ Wife
+--So, in Exercise 2, all thatβ€™s left for me to do is to update the original table with the spouse relationships.
 
 
+--ΧΧ Χ™ Χ”ΧªΧ™Χ™Χ—Χ΅ΧªΧ™ ΧΧ›Χ Χ©Χ‘ΧΧ‘ΧΧ” Χ”Χ¨ΧΧ©Χ•Χ Χ” Χ”Χ§Χ•Χ“ Χ©Χ Χ”ΧΧ‘Χ Χ”ΧΧΧ Χ•Χ‘Χ/Χ‘Χª Χ–Χ•Χ’ Χ‘Χ”Χ›Χ—Χ¨ Χ›Χ‘Χ¨ Χ§Χ™Χ™ΧΧ™Χ Χ‘ΧΧ‘ΧΧ” (Χ›ΧΧ©Χ¨ Χ”Χ ΧΧ null)
+--ΧΧ›Χ Χ›ΧΧ©Χ¨ Χ™Χ¦Χ¨ΧªΧ™ ΧΧ‘ΧΧ” Χ‘ΧªΧ¨Χ’Χ™Χ 1 ΧΧ•ΧΧ•ΧΧΧ™Χª Χ Χ•Χ¦Χ¨ Χ§Χ©Χ¨ Χ΅Χ™ΧΧΧ¨Χ™
+--ΧΧ“Χ•Χ’ΧΧ Χ§Χ©Χ¨ ΧΧ‘Χ ΧΧ•ΧΧ•ΧΧΧ™Χª Χ Χ•Χ¦Χ¨Χ• 2 Χ¨Χ©Χ•ΧΧ•Χª 1.ΧΧ‘Χ 2.Χ‘Χ
+--ΧΧ“Χ•Χ’ΧΧ Χ§Χ©Χ¨ Χ‘Χ Χ–Χ•Χ’: 2 Χ¨Χ©Χ•ΧΧ•Χª 1.Χ‘ΧΆΧ 2.ΧΧ™Χ©Χ”
+--ΧΧ›Χ Χ Χ©ΧΧ¨ ΧΧ™ Χ¨Χ§ ΧΧΆΧ“Χ›Χ Χ‘ΧªΧ¨Χ’Χ™Χ 2 ΧΧª Χ”ΧΧ‘ΧΧ” Χ”ΧΧ§Χ•Χ¨Χ™Χª Χ‘Χ§Χ©Χ¨ Χ©Χ Χ‘Χ Χ™ Χ–Χ•Χ’ 
 
---ϊψβιμ 1
 
-
+--Χ—ΧΧ§ 1
 
 create table  personRelations (
 person_id int not null,
 relative_id int null,
 connection_type varchar (30)  null,
 ) 
+
+
 
 INSERT INTO personRelations (person_id, relative_id, connection_type) 
 select person_id,father_id, 'father' from personDetails where father_id is not null
@@ -109,14 +124,9 @@ from personDetails p1, personDetails p2 where p1.person_id<>p2.person_id
 and (p1.father_id=p2.father_id or p1.mother_id=p2.mother_id )
 
 
---ΰπι δϊιιηρϊι μζδ ωαθαμδ δψΰωεπδ αδλψη χιιξιν μΰγν ωαψωεξδ δχεγ ωμ δΰαΰ δΰξΰ εαο/αϊ ζεβ (λΰωψ δν μΰ null)
---μλο λΰωψ ιφψϊι θαμδ αϊψβιμ 1 ΰεθεξθιϊ πεφψ χωψ ριξθψι
---μγεβξΰ χωψ ΰαΰ ΰεθεξθιϊ πεφψε 2 ψωεξεϊ 1.ΰαΰ 2.αο
---μγεβξΰ χωψ αο ζεβ: 2 ψωεξεϊ 1.αςμ 2.ΰιωδ
---μλο πωΰψ μι ψχ μςγλο αϊψβιμ 2 ΰϊ δθαμδ δξχεψιϊ αχωψ ωμ απι ζεβ 
 
+--ΧªΧ¨Χ’Χ™Χ 2
 
---ϊψβιμ 2
 UPDATE personDetails 
 SET personDetails.spouse_id=p1.person_id
 from personDetails as p1 , personDetails as personDetails where p1.spouse_id=personDetails.person_id 
