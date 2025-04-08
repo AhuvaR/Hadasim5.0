@@ -3,7 +3,8 @@ const service = require('../services/supplierService');
 async function getSupplier(req, res) {
     try {
         const data = await service.getSupplier(req.params.code)
-         res.json(data);
+        //req.session.supplier_id=data[0].supplier_id
+        res.json(data);
     } catch (error) {
         res.status(500).json({ error: error.message});
     }
