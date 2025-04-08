@@ -1,4 +1,4 @@
-const productModel = require('../models/productsModel')
+
 const server = require('../server')
 const db = require('../DB')
 
@@ -8,7 +8,6 @@ async function getAll() {
     try {
         const sql = `SELECT * FROM products`;
         const result = await db.queryFromSQL(sql);
-        console.log(result)
         return result;
     }
     catch (err) {
@@ -18,10 +17,7 @@ async function getAll() {
 
 async function newProducts(productArray) {
     try {
-        console.log('got to service product!!')
         const results = [];
-
-        // לולאה על המוצרים והכנסה של כל מוצר בנפרד
         for (let i = 0; i < productArray.length; i++) {
             const product = productArray[i];
             const query = `
@@ -34,7 +30,6 @@ async function newProducts(productArray) {
             results.push(result);  
         }
 
-        console.log(results);
         return results; 
     }
     catch {

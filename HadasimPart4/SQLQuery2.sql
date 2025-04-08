@@ -17,8 +17,8 @@ product_name varchar(40) not null,
 product_price float not null
 constraint PK_Prid PRIMARY KEY(product_id)
 constraint FK_products_supplier FOREIGN KEY(supplier_id) REFERENCES supplier(supplier_id)
-
 )
+
 create table  orders (
 order_id int identity(1,1) not null,
 product_id int not null,
@@ -43,22 +43,16 @@ VALUES (2, 'לחם מחיטה מלאה', 18.0);
 
 -- הכנסת הזמנות  
 INSERT INTO orders (product_id, status)  
-VALUES (1, 'ממתין לאישור');  
+VALUES (36, 'ממתין לאישור');  
 
 INSERT INTO orders (product_id, status)  
 VALUES (2, 'בתהליך');  
 
 
 
-SELECT name FROM sys.sql_logins;
-select * from supplier where company_code='1234'
-
-select *
-from orders o
-left join products p on o.product_id=p.product_id
-where supplier_id=1
 
 
-INSERT INTO supplier (company_name, company_code, phone_number, supplier_name)  VALUES 
-        ('תנובה','0999','0594837543','חגי דן');
-         SELECT SCOPE_IDENTITY() AS supplier_id;
+
+select * from products 
+select * from supplier
+select * from orders

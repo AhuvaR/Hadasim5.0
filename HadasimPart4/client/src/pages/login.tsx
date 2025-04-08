@@ -2,13 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { getData, getDataById, postNewObject } from '../fetch';
-import { Navigate, Route, Routes, useNavigate } from 'react-router';
+import { Navigate, Route, Routes, useNavigate, useNavigation } from 'react-router';
 import './login.css';
-import { Product } from '../models/productModel';
-import { Console } from 'console';
 
 type Supplier = {
-    //supplier_id: number
     company_name: string
     company_code: string
     phone_number: string
@@ -26,6 +23,7 @@ type TempararyProduct = {
 
 const Login = () => {
     const navigate = useNavigate();
+
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -45,30 +43,27 @@ const Login = () => {
     const [productArray, setProductArray] = useState<TempararyProduct[]>([{ product_id: 0, supplier_id: '', product_name: '', product_price: '', minimum_items_for_order: '' }])
 
     useEffect(() => {
-        
-        if (supplier?.company_name == company ) {
-            console.log('right in the place');
-            navigate("/orders")
+
+        if (supplier?.company_name == company) {
+            navigate(`/orders/${supplierId}`)
         }
-        if(supplierId!==undefined){
-            productArray.map((product)=>
-                product.supplier_id=supplierId
+        else if (supplierId !== undefined) {
+            productArray.map((product) =>
+                product.supplier_id = supplierId
             )
             postNewObject("products", productArray)
-            .then(data => {
-                console.log(data)
-            })
-            navigate("/orders")
+                .then(data => {
+                    console.log(data)
+                })
+            navigate(`/orders/${supplierId}`)
         }
     }, [supplier, supplierId]);
 
     useEffect(
         () => {
-            console.log("object:" + supplierToPost)
             if (supplierToPost !== undefined)
                 postNewObject("suppliers", supplierToPost)
                     .then(data => {
-                        console.log(data[0].supplier_id)
                         setSupplierId(data[0].supplier_id)
                     })
         }, [supplierToPost]);
@@ -93,17 +88,15 @@ const Login = () => {
         return true;
     }
 
-    const onButtonClick = () => {
+    const onSubmit = () => {
         const ans = validationCheck();
         if (ans === true) {
             getDataById("suppliers", password)
                 .then((data) => {
-                    console.log("did a api call")
                     if (data.length == 0) {
                         alert('סיסמא לא נכונה')
                     }
                     else {
-                       
                         setSupplier({
                             // supplier_id: data[0]?.supplier_id,
                             company_name: data[0]?.company_name,
@@ -111,12 +104,12 @@ const Login = () => {
                             phone_number: data[0]?.phone_number,
                             supplier_name: data[0]?.supplier_name
                         });
+                        setSupplierId(data[0]?.supplier_id)
                     }
                 })
         }
 
     }
-
 
     const postNewSupplier = () => {
         const ans = validationCheck();
@@ -137,6 +130,7 @@ const Login = () => {
     const onProduct = () => {
         setProductArray([...productArray, { product_id: 1, supplier_id: '', product_name: '', product_price: '', minimum_items_for_order: '' }])
     }
+
     const handleChange = (id: number, feild: keyof TempararyProduct, value: string) => {
 
         setProductArray((prevArray) =>
@@ -148,6 +142,7 @@ const Login = () => {
         )
 
     }
+
     const deleteProduct = (i: number) => {
         const deleteProduct = [...productArray]
         deleteProduct.splice(i, 1)
@@ -180,7 +175,7 @@ const Login = () => {
                         />
                         <label className='errorLabel'>{passwordError}</label>
                     </div>
-                    <input onClick={onButtonClick}
+                    <input onClick={onSubmit}
                         className={"inputButton"}
                         type="button"
                         value={"אישור"}

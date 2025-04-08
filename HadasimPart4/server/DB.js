@@ -10,8 +10,7 @@ async function queryFromSQL(queryText ,params=[]){
             console.error('Error executing query:', err); 
             return reject(err);
         }
-        
-     //   console.log('Rows:', rows);  
+         
     resolve(rows)
     });
 });

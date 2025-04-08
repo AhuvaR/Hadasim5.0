@@ -27,19 +27,15 @@ export function getDataById(type, code) {
 }
 
 export function postNewObject(type, object) {
-   console.log(` שולחת ל: http://localhost:8000/${type}`);
-   console.log(' עם גוף:', JSON.stringify(object));
    return fetch(`http://localhost:8000/${type}`, {
       method: 'POST',
       headers: {
          'Content-Type': 'application/json',
       },
       body: JSON.stringify(object)
-      // body: "{company_name: 'אסם', company_code: '23232', phone_number: '203940392',supplier_name: 'יוסי לוי'}",
    })
       .then(res => res.json())
       .then(data => {
-         console.log("data:"+data)
          return data;
       })
       .catch(err => {

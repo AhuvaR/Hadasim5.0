@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HadasimPart1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eda6d3de2929a01a645cf415afc7a5eb1a945295")]
 [assembly: System.Reflection.AssemblyProductAttribute("HadasimPart1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HadasimPart1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

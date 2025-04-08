@@ -18,7 +18,7 @@ const ShowProducts = () => {
     useEffect(() => {
         getData("products")
             .then((data) => {
-                console.log("Products length:", data.length);
+               
                 const adaptedData = data.map((item: any) => ({
                     id: item.product_id,
                     supplierId: item.supplier_id,

@@ -12,7 +12,7 @@ class Program
         //Part 1 - main
         ExcelPackage.License.SetNonCommercialPersonal("A.R.");
 
-        string logsFilePath = "C:/לימודים/הדסים מטלת בית/logs.txt.xlsx";
+        string logsFilePath = "C:/לימודים/Input-Output files for Part1/logs.txt.xlsx";
         int N = 3;
         IEnumerable<KeyValuePair<string, int>> topErrors = findMostCommonErrorCode(logsFilePath, N);
 
@@ -59,10 +59,10 @@ class Program
 
         //Part 2 - main
 
-        string time_series_FilePath_csv = "C:/לימודים/הדסים מטלת בית/time_series.csv";
+        string time_series_FilePath_csv = "C:/לימודים/Input-Output files for Part1/time_series.csv";
         finalAvgCalulaterPerday(time_series_FilePath_csv);
 
-        string time_series_FilePath_parquet = "C:/לימודים/הדסים מטלת בית/time_series.parquet";
+        string time_series_FilePath_parquet = "C:/לימודים/Input-Output files for Part1/time_series.parquet";
         ReadParquetFile(time_series_FilePath_parquet).Wait();
 
         /*

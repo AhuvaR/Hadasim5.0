@@ -4,10 +4,8 @@ const db = require('../DB')
 
 async function getSupplier(code) {
     try {
-        console.log("got to service")
         const query = `SELECT * FROM supplier WHERE company_code='${code}'`;
         const result = await db.queryFromSQL(query);
-        console.log(result)
         return result;
 
     }
@@ -18,21 +16,11 @@ async function getSupplier(code) {
 
 async function newSupplier(supplier) {
     try {
-        console.log('got to service!!')
-        // const query =`INSERT INTO supplier (company_name, company_code, phone_number, supplier_name)  VALUES 
-        //  OUTPUT INSERTED.supplier_id
-        // (?,?,?,?);`
         const query = `INSERT INTO supplier (company_name, company_code, phone_number, supplier_name)
                         OUTPUT INSERTED.supplier_id
                         VALUES ('${supplier.company_name}', '${supplier.company_code}', '${supplier.phone_number}', '${supplier.supplier_name}');`;
-        // const value = [
-        //     supplier.company_name,
-        //     supplier.company_code,
-        //     supplier.phone_number,
-        //     supplier.supplier_name]
 
         const result = await db.queryFromSQL(query)
-        console.log(result)
         return result
     }
     catch {

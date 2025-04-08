@@ -2,11 +2,10 @@ const service = require('../services/supplierService');
 
 async function getSupplier(req, res) {
     try {
-        console.log("got to controller")
         const data = await service.getSupplier(req.params.code)
-        res.json(data);
+         res.json(data);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message});
     }
 
 }

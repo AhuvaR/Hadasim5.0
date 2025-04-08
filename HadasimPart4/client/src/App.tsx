@@ -20,8 +20,7 @@ function App() {
     <Routes>
       <Route path='' element={<Login />}></Route>
       <Route path='/product' element={<ShowProducts />}></Route>
-      <Route path='/orders' element={<Orders/>}></Route>
-      {/* <Products></Products> */}
+      <Route path='/orders/:id' element={<Orders/>}></Route>
     </Routes>
 
   );

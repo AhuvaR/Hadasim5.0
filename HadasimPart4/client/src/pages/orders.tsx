@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { getDataById } from '../fetch';
 import './orders.css';
+import { useLocation, useParams } from 'react-router';
 
 
 type order = {
@@ -15,14 +16,16 @@ type order = {
 };
 
 const Orders = () => {
-    const id = 0;
+    const idFromUrl=useParams()
+
+    const id=0;
     const [orders, setOrders] = useState<order[]>([]);
     const [noOrders, setNoOrders] = useState(false);
+
     useEffect(() => {
-        getDataById("orders", id)
+        getDataById("orders", idFromUrl.id)
             .then((data) => {
-                console.log("orders length:", data.length);
-                if(data.length>0){
+                if(data?.length>0){
                 const adaptedData = data.map((item: any) => ({
                     order_id: item.order_id,
                     product_id: item.product_id,
