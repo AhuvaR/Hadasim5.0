@@ -7,20 +7,22 @@ import './orders.css';
 
 type order = {
     order_id: number;
-    product_id:number;
+    product_id: number;
     product_name: string
     status: string
-    minimum_items_for_order:number
-    
+    minimum_items_for_order: number
+
 };
 
 const Orders = () => {
-    const id=1;
+    const id = 0;
     const [orders, setOrders] = useState<order[]>([]);
+    const [noOrders, setNoOrders] = useState(false);
     useEffect(() => {
-        getDataById("orders",id)
+        getDataById("orders", id)
             .then((data) => {
                 console.log("orders length:", data.length);
+                if(data.length>0){
                 const adaptedData = data.map((item: any) => ({
                     order_id: item.order_id,
                     product_id: item.product_id,
@@ -28,18 +30,22 @@ const Orders = () => {
                     product_name: item.product_name,
                     minimum_items_for_order: item.minimum_items_for_order
                 }))
-                //[{"order_id":1,"product_id":1,"status":"ממתין לאישור","Column3":1,"supplier_id":1,"product_name":"כמון טחון","product_price":12.5}]
-                setOrders([...adaptedData])
+                setOrders([...adaptedData])}
+                else
+                setNoOrders(true)
+
             });
     }, []);
     return (
         <>
-            <div className="product-container">
+        <div className="welcome"><h4>Welcome!</h4></div>
+            {noOrders && <div className="noOrders"><h3>No orders yet...</h3></div>}
+            {!noOrders && <div className="product-container">
                 <h1>Orders:</h1>
                 {orders.map((order, index) => (
                     <div key={order.order_id} className="product-item">{order.product_id} : {order.product_name} <p>{order.status}</p></div>
                 ))}
-            </div>
+            </div>}
         </>
     );
 }

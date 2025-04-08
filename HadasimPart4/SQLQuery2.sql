@@ -58,3 +58,7 @@ from orders o
 left join products p on o.product_id=p.product_id
 where supplier_id=1
 
+
+INSERT INTO supplier (company_name, company_code, phone_number, supplier_name)  VALUES 
+        ('תנובה','0999','0594837543','חגי דן');
+         SELECT SCOPE_IDENTITY() AS supplier_id;

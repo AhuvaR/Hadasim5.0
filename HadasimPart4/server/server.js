@@ -8,16 +8,13 @@ const orderRoute=require('./routes/orderRoute')
 app.use(cors());
 app.use(express.json());
 
-// app.get("/message", (req, res) => {
-//   res.json({ message: "Hello from server!" });
-// });
-
-// app.get("/api", (req, res) => {
-//   res.json({ api: "Oh!!! yes" });
+// app.use((req, res, next) => {
+//   console.log(` בקשה התקבלה: ${req.method} ${req.url}`);
+//   next();
 // });
 app.use("/products", productRoute);
-app.use("/login", supplierRoute);
-app.use("/orders", orderRoute)
+app.use("/suppliers", supplierRoute);
+app.use("/orders", orderRoute);
 
 app.listen(8000, () => {
   console.log(`Server is running on port 8000.`);

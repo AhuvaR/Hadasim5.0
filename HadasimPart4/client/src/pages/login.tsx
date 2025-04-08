@@ -1,31 +1,37 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { getData, getDataById } from '../fetch';
-import { Navigate, Route, Routes } from 'react-router';
+import { getData, getDataById, postNewObject } from '../fetch';
+import { Navigate, Route, Routes, useNavigate } from 'react-router';
 import './login.css';
 import { Product } from '../models/productModel';
+import { Console } from 'console';
 
 type Supplier = {
-    supplier_id: number
+    //supplier_id: number
     company_name: string
     company_code: string
     phone_number: string
     supplier_name: string
 };
-type TempararyProduct={
-    product_id: string
-    supplier_id :string
-    product_name:string
-    product_price :string
-    minimum_items_for_order:string
+
+type TempararyProduct = {
+    product_id: number
+    supplier_id: string
+    product_name: string
+    product_price: string
+    minimum_items_for_order: string
 }
 
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const [isOpen, setIsOpen] = useState(false);
 
     const [supplier, setSupplier] = useState<Supplier>()
+    const [supplierToPost, setSupplierToPost] = useState<Supplier>()
+    const [supplierId, setSupplierId] = useState()
 
     const [company, setCompany] = useState("")
     const [password, setPassword] = useState("")
@@ -36,13 +42,38 @@ const Login = () => {
     const [passwordError, setPasswordError] = useState("")
 
     const [goTorders, setGoToOrder] = useState(false)
-    const [productArray, setProductArray] = useState<TempararyProduct[]>([{ product_id: '', supplier_id: '', product_name: '', product_price: '', minimum_items_for_order: '' }])
-    if (goTorders) {
-        return <Navigate to="/orders" />
-    }
+    const [productArray, setProductArray] = useState<TempararyProduct[]>([{ product_id: 0, supplier_id: '', product_name: '', product_price: '', minimum_items_for_order: '' }])
 
+    useEffect(() => {
+        
+        if (supplier?.company_name == company ) {
+            console.log('right in the place');
+            navigate("/orders")
+        }
+        if(supplierId!==undefined){
+            productArray.map((product)=>
+                product.supplier_id=supplierId
+            )
+            postNewObject("products", productArray)
+            .then(data => {
+                console.log(data)
+            })
+            navigate("/orders")
+        }
+    }, [supplier, supplierId]);
 
-    const onButtonClick = () => {
+    useEffect(
+        () => {
+            console.log("object:" + supplierToPost)
+            if (supplierToPost !== undefined)
+                postNewObject("suppliers", supplierToPost)
+                    .then(data => {
+                        console.log(data[0].supplier_id)
+                        setSupplierId(data[0].supplier_id)
+                    })
+        }, [supplierToPost]);
+
+    const validationCheck = () => {
         setNameError("")
         setPasswordError("")
 
@@ -59,49 +90,62 @@ const Login = () => {
             setPasswordError("סיסמא צריכה להיות 4 תווים או יותר")
             return
         }
-        getDataById("login", password)
-            .then((data) => {
-                if (data.length == 0) {
-                    alert('סיסמא לא נכונה')
-                }
-                else {
-                    setSupplier({
-                        supplier_id: data[0]?.supplier_id,
-                        company_name: data[0]?.company_name,
-                        company_code: data[0]?.company_code,
-                        phone_number: data[0]?.phone_number,
-                        supplier_name: data[0]?.supplier_name
-                    });
-                    //setSupplier(JSON.parse(data));
-                    console.log('data' + JSON.stringify(data))
-                    // setSupplier(data[0])
-                    console.log(supplier?.company_name)
-                    console.log(company)
-                }
-            })
+        return true;
+    }
 
-        if (supplier?.company_name == company) {
-            console.log("got in!!" + supplier.company_name);
-            setGoToOrder(true)
-            return (<Navigate to="/orders" />)
+    const onButtonClick = () => {
+        const ans = validationCheck();
+        if (ans === true) {
+            getDataById("suppliers", password)
+                .then((data) => {
+                    console.log("did a api call")
+                    if (data.length == 0) {
+                        alert('סיסמא לא נכונה')
+                    }
+                    else {
+                       
+                        setSupplier({
+                            // supplier_id: data[0]?.supplier_id,
+                            company_name: data[0]?.company_name,
+                            company_code: data[0]?.company_code,
+                            phone_number: data[0]?.phone_number,
+                            supplier_name: data[0]?.supplier_name
+                        });
+                    }
+                })
         }
 
+    }
 
+
+    const postNewSupplier = () => {
+        const ans = validationCheck();
+        if (ans === true) {
+            setSupplierToPost({
+                company_name: company,
+                company_code: password,
+                phone_number: phone,
+                supplier_name: suplierName
+            })
+        }
     }
 
     const onNewSupplier = () => {
         setIsOpen(true)
     }
+
     const onProduct = () => {
-        setProductArray([...productArray, { product_id:'', supplier_id: '', product_name: '', product_price: '', minimum_items_for_order: ''}])
+        setProductArray([...productArray, { product_id: 1, supplier_id: '', product_name: '', product_price: '', minimum_items_for_order: '' }])
     }
-    const handleChange = (ev: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        let i:Number=index
-        let name=ev.target.name
-        let value =ev.target.value
-        let changVal: TempararyProduct[] = [...productArray]
-        changVal[index]  [name]=String(value) 
-        setProductArray(changVal)
+    const handleChange = (id: number, feild: keyof TempararyProduct, value: string) => {
+
+        setProductArray((prevArray) =>
+            prevArray.map((product) =>
+                product.product_id === id ?
+                    { ...product, [feild]: value }
+                    : product
+            )
+        )
 
     }
     const deleteProduct = (i: number) => {
@@ -195,29 +239,28 @@ const Login = () => {
                     <div className="user-box">
                         {
                             productArray.map((val, i) =>
-                                <div>
+                                <div key={val.product_id = i}>
                                     <input
-                                        name='productName'
+                                        name='product_name'
                                         value={val.product_name}
                                         placeholder='הכנס שם מוצר'
-                                        onChange={(ev) => handleChange(ev, i)}
+                                        onChange={(ev) => handleChange(val.product_id, 'product_name', ev.target.value)}
                                         className={'product-box'}
-
                                     />
                                     <input
-                                        name='productPrice'
+                                        name='product_price'
                                         value={val.product_price}
                                         placeholder='הכנס מחיר לפריט'
-                                        onChange={(ev) => handleChange(ev, i)}
+                                        onChange={(ev) => handleChange(val.product_id, 'product_price', ev.target.value)}
                                         className={'product-box'}
 
                                     />
                                     <input
                                         type='number'
-                                        name='miniAmount'
+                                        name='minimum_items_for_order'
                                         value={val.minimum_items_for_order}
                                         placeholder='הכנס כמות מינימלית לרכישה '
-                                        onChange={(ev) => handleChange(ev, i)}
+                                        onChange={(ev) => handleChange(val.product_id, 'minimum_items_for_order', ev.target.value)}
                                         className={'product-box'}
 
                                     />
@@ -230,13 +273,13 @@ const Login = () => {
                         <button onClick={onProduct} type="button" className='backButton'>מוצר נוסף</button>
 
                     </div>
-                    <input onClick={onButtonClick}
+                    <input onClick={postNewSupplier}
                         className={"inputButton"}
                         type="button"
                         value={"אישור"}
                     />
                 </form>
-
+                {JSON.stringify(productArray)}
             </div>}
 
         </>

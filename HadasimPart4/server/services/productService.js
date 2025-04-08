@@ -16,16 +16,34 @@ async function getAll() {
     }
 }
 
+async function newProducts(productArray) {
+    try {
+        console.log('got to service product!!')
+        const results = [];
 
-module.exports ={getAll} ;
+        // לולאה על המוצרים והכנסה של כל מוצר בנפרד
+        for (let i = 0; i < productArray.length; i++) {
+            const product = productArray[i];
+            const query = `
+                INSERT INTO products (supplier_id, product_name, product_price,minimum_items_for_order)
+                OUTPUT INSERTED.product_id
+                VALUES ('${product.supplier_id}', '${product.product_name}', '${product.product_price}','${product.minimum_items_for_order}' );
+            `;
+            
+            const result = await db.queryFromSQL(query);  
+            results.push(result);  
+        }
+
+        console.log(results);
+        return results; 
+    }
+    catch {
+        throw err;
+    }
+}
 
 
-// const query="SELECT * FROM products";
-// sql.query(connectionString, query, (err, rows) => {
-//     if (err) {
-//         console.error('Error executing query:', err);  // הצגת שגיאה אם יש
-//         return;
-//     }
-    
-//     console.log('Rows:', rows);  // הצגת התוצאות
-// });
+
+module.exports ={getAll,newProducts} ;
+
+
